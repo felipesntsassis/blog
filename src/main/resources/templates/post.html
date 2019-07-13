@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Cadastro de Posts</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="container mt-5 mb-5">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+						<h3>Cadastro de Posts</h3>
+						<ul class="nav justify-content-end mb-3">
+							<li class="nav-item">
+								<a class="btn btn-success" th:href="@{/add}" >Adicionar</a>
+							</li>
+						</ul>
+						<table class="table table-striped">
+								<thead class="thead-light">
+									<tr>
+										<th scope="col">ID</th>
+										<th scope="col">Autor</th>
+										<th scope="col">Título</th>
+										<th scope="col">Data</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(posts)}" th:each="post : ${posts}">
+										<td th:text="${post.id}"></td>
+										<td th:text="${post.autor}"></td>
+										<td th:text="${post.titulo}"></td>
+										<td th:text="${#dates.format(post.data,'dd/MM/yyyy')}"></td>
+										<td>
+											<div class="d-flex justify-content-end btn-group pull-right">
+												<a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${post.id})}">Editar</a>
+												<a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${post.id})}">Excluir</a>
+											</div>
+										</td>
+									</tr>
+									<tr th:if="${#lists.isEmpty(posts)}">
+										<td class="text-center" colspan="5"><em>Nenhum registro encontrado.</em></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

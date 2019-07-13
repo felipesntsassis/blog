@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Cadastro de Posts</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div class="container mt-5 mb-5">
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+						<h3>Editar Post</h3>
+						<hr>
+						<form th:object="${post}" th:action="@{/save}" method="POST" class="needs-validation" novalidate>
+							<div class="form-group row">
+								<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}" role="alert">
+									<div th:each="detailedError : ${#fields.detailedErrors()}">
+										<strong class="mr-3">&times;</strong><span th:text="${detailedError.message}"></span>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-12 col-md-2">
+									<label>ID</label>
+									<input type="text" class="form-control input-sm" id="id"
+										th:field="*{id}" readOnly="readonly" />
+								</div>
+								<div class="form-group col-12 col-md-7" th:classappend="${#fields.hasErrors('autor')}? 'has-error'">
+									<label>Autor</label>
+									<input type="text" class="form-control input-sm" th:field="*{autor}" 
+										autofocus="autofocus" placeholder="Informe o autor" maxlength="50" required />
+								</div>
+								<div class="col-md-3" th:classappend="${#fields.hasErrors('data')}? 'has-error'">
+									<label>Data</label>
+									<input type="date" class="form-control input-sm" th:field="*{data}" required/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-12" th:classappend="${#fields.hasErrors('titulo')}? 'has-error'">
+									<label>Título</label>
+									<input type="text" class="form-control input-sm" th:field="*{titulo}"
+										maxlength="150" placeholder="Informe o título" required />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 col-md-12" th:classappend="${#fields.hasErrors('texto')}? 'has-error'">
+									<label>Texto</label>
+									<textarea class="form-control input-sm" th:field="*{texto}"
+										cols="5" rows="5" placeholder="Informe o texto" resize="false"></textarea>
+								</div>
+							</div>
+							<hr>
+							<div class="nav justify-content-center">
+								<div class="p-1 nav-item">
+									<button type="submit" class="btn btn-primary">Salvar</button>
+								</div>
+								<div class="p-1 nav-item">
+									<a th:href="@{/}" class="btn btn-outline-danger" tabindex="-1">Cancelar</a>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			(function() {
+				'use strict';
+				window.addEventListener('load', function() {
+						var forms = document.getElementsByClassName('needs-validation');
+						// Loop over them and prevent submission
+						var validation = Array.prototype.filter.call(forms, function(form) {
+							form.addEventListener('submit', function(event) {
+									if (form.checkValidity() === false) {
+										event.preventDefault();
+										event.stopPropagation();
+									}
+									form.classList.add('was-validated');
+								},
+								false
+							);
+						});
+				}, false);
+			})();
+		</script>
+	</body>
+</html>
