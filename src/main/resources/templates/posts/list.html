@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Blog - Posts</title>
+		<link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<!-- Cabeçalho -->
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">Blog</a>
+			<button class="navbar-toggler" type="button"
+				data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent"
+				aria-expanded="false"
+				aria-label="Alternar Navegação">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+	
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" th:href="@{/}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/sobre}">Sobre</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<!-- Fim do Cabeçalho -->
+
+		<!-- Conteúdo -->
+		<div class="container mt-4">
+			<div class="row">
+				<div class="col-12 col-sm-12 col-md-8">
+					<h1>Últimos Posts</h1>
+					<div class="card" th:if="${not #lists.isEmpty(posts)}" th:each="post : ${posts}">
+						<div class="card-body">
+							<h4 th:text="${post.titulo}"></h4>
+							<h5 class="text-muted">
+								<small>
+									Publicado em: <span th:text="${#dates.format(post.dataPublicacao,'dd/MM/yyyy')}"></span>
+								</small>
+							</h5>
+							<p th:text="${post.texto}"></p>
+							<hr>
+							<div class="d-flex flex-row justify-content-end">
+								<a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-primary mr-2">
+									Editar Post
+								</a>
+								<a th:href="@{/posts/delete/{id}(id=${post.id})}" class="btn btn-danger">
+									Excluir Post
+								</a>
+							</div>
+						</div>
+						
+					</div>
+					<div class="card" th:if="${#lists.isEmpty(posts)}">
+						<div class="card-body">
+							<em>Nenhum Post publicado =(</em>
+						</div>
+						
+					</div>
+				</div>
+				<div class="col-12 col-sm-12 col-md-4">
+					<h3>Sobre</h3>
+				</div>
+			</div>
+		</div>
+		<!-- Fim do Conteúdo -->
+		
+		<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+	</body>
+</html>
